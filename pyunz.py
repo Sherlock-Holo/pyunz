@@ -22,17 +22,32 @@ def file_type(file):
     file_type = file_type.communicate()[0]
     return file_type.strip()
 
-#print(file_type('/tmp/mentohust.7z'))
-
 def untar(file):
     args = '-xvf'
-    subprocess.check_output([bin('tar'), args, file])
+    subprocess.Popen([bin('tar'), args, file])
 
 def unzip(file):
     args = '-o'
-    subprocess.check_output([bin('unzip'), args, file])
+    subprocess.Popen([bin('unzip'), args, file])
 
 def un7z(file):
     args1 = 'x'
-    args2 = 'y'
-    subprocess.check_output([bin('7za'), args1, args2, file])
+    args2 = '-y'
+    subprocess.Popen([bin('7za'), args1, args2, file])
+
+
+zfile = sys.argv[1]
+zfile_type = file_type(zfile)
+
+if zfile_type == b'application/x-7z-compressed':
+    un7z(zfile)
+
+elif (zfile_type == b'application/x-gzip' or zfile_type == b'application/x-xz' or
+    zfile_type == b'application/x-bzip2'):
+    untar(zfile)
+
+elif zfile_type == b'application/zip':
+    unzip(zfile)
+
+else:
+    print('failed')
