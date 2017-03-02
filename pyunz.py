@@ -35,7 +35,6 @@ def un7z(file):
     args2 = '-y'
     subprocess.Popen([bin('7za'), args1, args2, file])
 
-
 zfile = sys.argv[1]
 zfile_type = file_type(zfile)
 
