@@ -1,6 +1,7 @@
 import os
 import subprocess
-import click
+import sys
+#import getopt
 
 #zlist = []
 
@@ -21,7 +22,7 @@ def file_type(file):
     file_type = file_type.communicate()[0]
     return file_type.strip()
 
-print(file_type('/tmp/mentohust.7z'))
+#print(file_type('/tmp/mentohust.7z'))
 
 def untar(file):
     args = '-xvf'
