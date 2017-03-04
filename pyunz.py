@@ -5,8 +5,6 @@ import subprocess
 import sys
 #import getopt
 
-#zlist = []
-
 def bin(name):
     path = os.environ.get('PATH')
     path = path.split(os.pathsep)
@@ -37,8 +35,18 @@ def un7z(file):
     args2 = '-y'
     subprocess.Popen([bin('7za'), args1, args2, file])
 
-zfile = sys.argv[1]
-zfile_type = file_type(zfile)
+def failed():
+    print('Is it a package?')
+    return sys.exit(1)
+
+
+try:
+    zfile = sys.argv[1]
+    zfile_type = file_type(zfile)
+
+except IndexError:
+    failed()
+
 
 if zfile_type == b'application/x-7z-compressed':
     un7z(zfile)
@@ -51,4 +59,4 @@ elif zfile_type == b'application/zip':
     unzip(zfile)
 
 else:
-    print('failed')
+    failed()
