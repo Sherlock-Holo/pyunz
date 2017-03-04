@@ -51,17 +51,20 @@ def un7z(file):
         print("You don't have 7z or 7za")
         return sys.exit(1)
 
-def failed():
+def pkg_error():
     print('Is it a package?')
     return sys.exit(1)
 
+def not_found():
+    print('Where is the package?')
+    return sys.exit(1)
 
 try:
     zfile = sys.argv[1]
     zfile_type = file_type(zfile)
 
 except IndexError:
-    failed()
+    not_found()
 
 
 if zfile_type == b'application/x-7z-compressed':
@@ -75,4 +78,4 @@ elif zfile_type == b'application/zip':
     unzip(zfile)
 
 else:
-    failed()
+    pkg_error()
