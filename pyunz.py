@@ -15,6 +15,7 @@ def bin(name):
 
     return binary
 
+
 def file_type(file):
     file_bin = 'file'
     file_type = subprocess.Popen([file_bin,'-b','--mime-type',file],
@@ -23,17 +24,32 @@ def file_type(file):
     return file_type.strip()
 
 def untar(file):
+    if 'core_perl' in bin('tar'):
+        print("You don't have tar")
+        return sys.exit(1)
     args = '-xvf'
     subprocess.Popen([bin('tar'), args, file])
 
 def unzip(file):
+    if 'core_perl' in bin('unzip'):
+        print("You don't have unzip")
+        return sys.exit(1)
     args = '-o'
     subprocess.Popen([bin('unzip'), args, file])
 
 def un7z(file):
+    _7z1 = '7z'
+    _7z2 = '7za'
     args1 = 'x'
     args2 = '-y'
-    subprocess.Popen([bin('7za'), args1, args2, file])
+
+    if 'core_perl' not in bin(_7z1):
+        subprocess.Popen([bin(_7z1), args1, args2, file])
+    elif 'core_perl' not in bin(_7z2):
+        subprocess.Popen([bin(_7z2), args1, args2, file])
+    else:
+        print("You don't have 7z or 7za")
+        return sys.exit(1)
 
 def failed():
     print('Is it a package?')
