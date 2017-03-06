@@ -3,7 +3,9 @@
 import os
 import subprocess
 import sys
-#import getopt
+import argparse
+
+VERSION = '0.2'
 
 def bin(name):
     path = os.environ.get('PATH')
@@ -55,27 +57,37 @@ def pkg_error():
     print('Is it a package?')
     return sys.exit(1)
 
-def not_found():
-    print('Where is the package?')
-    return sys.exit(1)
+#def not_found():
+#    print('Where is the package?')
+#    return sys.exit(1)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-x', '--extract', help = 'extract the package automatically')
+parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
+
+
+args = parser.parse_args()
+
 
 try:
-    zfile = sys.argv[1]
-    zfile_type = file_type(zfile)
-
-except IndexError:
-    not_found()
+    zfile_type = file_type(args.extract)
+except TypeError:
+    pass
 
 
-if zfile_type == b'application/x-7z-compressed':
-    un7z(zfile)
+if args.extract:
+    if zfile_type == b'application/x-7z-compressed':
+        un7z(args.extract)
 
-elif (zfile_type == b'application/x-gzip' or zfile_type == b'application/x-xz' or
-    zfile_type == b'application/x-bzip2'):
-    untar(zfile)
+    elif (zfile_type == b'application/x-gzip' or zfile_type == b'application/x-xz' or
+        zfile_type == b'application/x-bzip2'):
+        untar(args.extract)
 
-elif zfile_type == b'application/zip':
-    unzip(zfile)
+    elif zfile_type == b'application/zip':
+        unzip(args.extract)
 
-else:
-    pkg_error()
+    else:
+        pkg_error()
+
+if args.version:
+    print(VERSION)
