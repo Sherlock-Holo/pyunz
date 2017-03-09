@@ -5,7 +5,7 @@ import subprocess
 import sys
 import argparse
 
-VERSION = '0.2'
+VERSION = 'pyunz 0.2'
 
 def bin(name):
     path = os.environ.get('PATH')
@@ -61,9 +61,11 @@ def pkg_error():
 #    print('Where is the package?')
 #    return sys.exit(1)
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description = 'an extract tool for tgz, zip, 7z...')
 parser.add_argument('-x', '--extract', help = 'extract the package automatically')
 parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
+parser.add_argument('-c', '--create', choices = ['tgz', 'txz', 'tbz2'], help = 'create a package')
+parser.add_argument('-o', '--output', help = 'the package name')
 
 
 args = parser.parse_args()
