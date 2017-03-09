@@ -83,22 +83,15 @@ def package_error():
     print('Is it a package?')
     return sys.exit(1)
 
-<<<<<<< HEAD
-#def not_found():
-#    print('Where is the package?')
-#    return sys.exit(1)
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-x', '--extract', help = 'extract the package automatically')
 parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
-=======
 parser = argparse.ArgumentParser(description = 'an extract tool for tgz, zip, 7z...')
 parser.add_argument('-x', '--extract', help = 'extract the package automatically')
 parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
 parser.add_argument('-i', '--input', help = 'create a package')
 parser.add_argument('-t', '--type', choices = ['tgz', 'tbz', 'txz', '7z', 'zip'], help = 'choose the package type')
 parser.add_argument('-o', '--output', help = 'the package name')
->>>>>>> create
 
 
 args = parser.parse_args()
