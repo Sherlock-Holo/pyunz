@@ -5,7 +5,7 @@ import subprocess
 import sys
 import argparse
 
-VERSION = 'pyunz 0.2'
+VERSION = 'pyunz 0.2.1'
 
 def bin(name):
     path = os.environ.get('PATH')
@@ -99,7 +99,7 @@ try:
 except TypeError:
     pass
 
-
+# extract package
 if args.extract:
     if zfile_type == b'application/x-7z-compressed':
         un7z(args.extract)
@@ -117,7 +117,7 @@ if args.extract:
 if args.version:
     print(VERSION)
 
-
+# commpress package
 if args.type == 'tgz':
     compress_tar(args.type, args.input, args.output)
 
