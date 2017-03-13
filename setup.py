@@ -8,8 +8,9 @@ setup(
     author = 'Sherlock Holo',
     author_email = 'sherlockya@gmail.com',
     description = 'an extract wrapper',
+    #packages = ['pyunz.py'],
     scripts = ['pyunz.py'],
-    classifiers=[
+    classifiers = [
         'License :: OSI Approved :: GPL-3.0 License',
         'Programming Language :: Python :: 3.6',
         ],
