@@ -13,9 +13,9 @@ setup(
     classifiers = [
         'License :: OSI Approved :: GPL-3.0 License',
         'Programming Language :: Python :: 3.6',
-        ],
-    entry_points = '''
-        [console_scripts]
-        pyunz = pyunz : cli
-    ''',
+        ]
+    #entry_points = '''
+    #    [console_scripts]
+    #    pyunz = pyunz : cli
+    #''',
 )
