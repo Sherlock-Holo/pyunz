@@ -5,7 +5,7 @@ import subprocess
 import sys
 import argparse
 
-VERSION = 'pyunz 0.2.1'
+VERSION = 'pyunz 0.2.3'
 
 def bin(name):
     path = os.environ.get('PATH')
@@ -83,19 +83,15 @@ def package_error():
     print('Is it a package?')
     return sys.exit(1)
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-x', '--extract', help = 'extract the package automatically')
-parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
 parser = argparse.ArgumentParser(description = 'an extract tool for tgz, zip, 7z...')
 parser.add_argument('-x', '--extract', help = 'extract the package automatically')
 parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
-parser.add_argument('-i', '--input', help = 'create a package')
-parser.add_argument('-t', '--type', choices = ['tgz', 'tbz', 'txz', '7z', 'zip'], help = 'choose the package type')
-parser.add_argument('-o', '--output', help = 'the package name')
+parser.add_argument('-c', '--create', choices = ['tgz', 'tbz', 'txz', '7z', 'zip'], help = 'create package')
+parser.add_argument('archive', nargs = '?', help = 'package name')
+parser.add_argument('file', nargs = '?', help = 'file')
 
 
 args = parser.parse_args()
-
 
 try:
     zfile_type = file_type(args.extract)
@@ -120,18 +116,18 @@ if args.extract:
 if args.version:
     print(VERSION)
 
-# commpress package
-if args.type == 'tgz':
-    compress_tar(args.type, args.input, args.output)
+# compress package
+if args.create == 'tgz':
+    compress_tar(args.create, args.file, args.archive)
 
-elif args.type == 'tbz':
-    compress_tar(args.type, args.input, args.output)
+elif args.create == 'tbz':
+    compress_tar(args.create, args.file, args.archive)
 
-elif args.type == 'txz':
-    compress_tar(args.type, args.input, args.output)
+elif args.create == 'txz':
+    compress_tar(args.create, args.file, args.archive)
 
-elif args.type == '7z':
-    compress_7z(args.input, args.output)
+elif args.create == '7z':
+    compress_7z(args.file, args.archive)
 
-elif args.type == 'zip':
-    compress_zip(args.input, args.output)
+elif args.create == 'zip':
+    compress_zip(args.file, args.archive)
