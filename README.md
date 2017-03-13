@@ -3,23 +3,22 @@
 ## usage
 
 ```
-usage: pyunz.py [-h] [-x EXTRACT] [-v] [-i INPUT] [-t {tgz,tbz,txz,7z,zip}]
-                [-o OUTPUT]
+usage: pyunz.py [-h] [-x EXTRACT] [-v] [-c {tgz,tbz,txz,7z,zip}]
+                [archive] [file]
 
 an extract tool for tgz, zip, 7z...
+
+positional arguments:
+  archive               package name
+  file                  file
 
 optional arguments:
   -h, --help            show this help message and exit
   -x EXTRACT, --extract EXTRACT
                         extract the package automatically
   -v, --version         print version
-  -i INPUT, --input INPUT
-                        create a package
-  -t {tgz,tbz,txz,7z,zip}, --type {tgz,tbz,txz,7z,zip}
-                        choose the package type
-  -o OUTPUT, --output OUTPUT
-                        the package name
-
+  -c {tgz,tbz,txz,7z,zip}, --create {tgz,tbz,txz,7z,zip}
+                        create package
 ```
 
 ## support
