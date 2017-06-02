@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import subprocess
 import sys
-import argparse
 
 VERSION = 'pyunz 0.2.3'
+
 
 def bin(name):
     path = os.environ.get('PATH')
     path = path.split(os.pathsep)
     for bin_path in path:
         binary = os.path.join(bin_path, name)
-        if os.access(binary,os.X_OK):
+        if os.access(binary, os.X_OK):
             break
 
     return binary
@@ -20,10 +21,11 @@ def bin(name):
 
 def file_type(file):
     file_bin = 'file'
-    file_type = subprocess.Popen([file_bin,'-b','--mime-type',file],
-                                 stdout = subprocess.PIPE,stderr = subprocess.DEVNULL)
+    file_type = subprocess.Popen([file_bin, '-b', '--mime-type', file],
+                                 stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
     file_type = file_type.communicate()[0]
     return file_type.strip()
+
 
 def untar(file):
     if 'core_perl' in bin('tar'):
@@ -32,12 +34,14 @@ def untar(file):
     args = '-xvf'
     subprocess.run([bin('tar'), args, file])
 
+
 def unzip(file):
     if 'core_perl' in bin('unzip'):
         print("You don't have unzip")
         return sys.exit(1)
     args = '-o'
     subprocess.run([bin('unzip'), args, file])
+
 
 def un7z(file):
     _7z = '7z'
@@ -53,6 +57,7 @@ def un7z(file):
         print("You don't have 7z or 7za")
         return sys.exit(1)
 
+
 def compress_tar(type, i_file, o_file):
     if type == 'tgz':
         args = 'cvzf'
@@ -66,6 +71,7 @@ def compress_tar(type, i_file, o_file):
         args = 'cvjf'
         subprocess.run([bin('tar'), args, o_file, i_file])
 
+
 def compress_7z(i_file, o_file):
     args = 'a'
     _7z = '7z'
@@ -76,19 +82,22 @@ def compress_7z(i_file, o_file):
     elif 'core_perl' not in bin(_7za):
         subprocess.run([bin(_7za), args, o_file, i_file])
 
+
 def compress_zip(i_file, o_file):
     subprocess.run([bin('zip'), o_file, i_file])
+
 
 def package_error():
     print('Is it a package?')
     return sys.exit(1)
 
-parser = argparse.ArgumentParser(description = 'an extract tool for tgz, zip, 7z...')
-parser.add_argument('-x', '--extract', help = 'extract the package automatically')
-parser.add_argument('-v', '--version',action = 'store_true', help = 'print version')
-parser.add_argument('-c', '--create', choices = ['tgz', 'tbz', 'txz', '7z', 'zip'], help = 'create package')
-parser.add_argument('archive', nargs = '?', help = 'package name')
-parser.add_argument('file', nargs = '?', help = 'file')
+parser = argparse.ArgumentParser(description='an extract tool for tgz, zip, 7z...')
+parser.add_argument('-x', '--extract', help='extract the package automatically')
+parser.add_argument('-v', '--version', action='store_true', help='print version')
+parser.add_argument('-c', '--create', choices=['tgz',
+                                               'tbz', 'txz', '7z', 'zip'], help='create package')
+parser.add_argument('archive', nargs='?', help='package name')
+parser.add_argument('file', nargs='?', help='file')
 
 
 args = parser.parse_args()
@@ -104,7 +113,7 @@ if args.extract:
         un7z(args.extract)
 
     elif (zfile_type == b'application/x-gzip' or zfile_type == b'application/x-xz' or
-        zfile_type == b'application/x-bzip2'):
+          zfile_type == b'application/x-bzip2'):
         untar(args.extract)
 
     elif zfile_type == b'application/zip':
